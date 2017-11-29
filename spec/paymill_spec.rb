@@ -58,5 +58,12 @@ describe Paymill do
       Paymill.logger = logger
       expect(Paymill.logger).to eq logger
     end
+
+    it 'allows you to set the request timeout (in seconds)' do
+      Paymill.timeout = 65 # secs
+      expect(Paymill.timeout).to  eq 65
+      Paymill.timeout = nil
+      expect(Paymill.timeout).to  be_nil
+    end
   end
 end

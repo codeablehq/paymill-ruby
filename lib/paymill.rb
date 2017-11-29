@@ -14,6 +14,7 @@ module Paymill
   @@api_version = API_VERSION
   @@api_port    = Net::HTTP.https_default_port
   @@logger      = Logger.new(STDOUT)
+  @@timeout     = nil
 
   autoload :Base,             "paymill/base"
   autoload :Client,           "paymill/client"
@@ -114,6 +115,21 @@ module Paymill
   def self.logger=(logger)
     @@logger = logger
   end
+
+  # Returns the current timeout (in seconds)
+  #
+  # @return [Integer] timeout The request timeout (in seconds) or nil
+  def self.timeout
+    @@timeout
+  end
+
+  # Sets the timeout for requests
+  #
+  # @param [Integer] timeout The request timeout (in seconds)
+  def self.timeout=(timeout)
+    @@timeout = timeout
+  end
+
 
   # Makes a request against the Paymill API
   #
