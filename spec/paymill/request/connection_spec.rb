@@ -2,12 +2,32 @@ require "spec_helper"
 
 describe Paymill::Request::Connection do
   describe "#setup_https" do
+    let(:default_timeout) { 60 }
+
     it "creates a https object" do
       connection = Paymill::Request::Connection.new(nil)
 
       connection.setup_https
 
       connection.https.should_not be_nil
+    end
+
+    it "creates a https object with the default timeout" do
+      expect(Paymill.timeout).to  be_nil
+      connection = Paymill::Request::Connection.new(nil)
+      connection.setup_https
+
+      expect(connection.https).not_to          be_nil
+      expect(connection.https.read_timeout).to eq default_timeout
+    end
+
+    it "creates a https object with the default timeout" do
+      Paymill.timeout = 65 # seconds
+      connection = Paymill::Request::Connection.new(nil)
+      connection.setup_https
+
+      expect(connection.https).not_to          be_nil
+      expect(connection.https.read_timeout).to eq 65
     end
   end
 

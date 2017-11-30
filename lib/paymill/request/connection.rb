@@ -9,8 +9,9 @@ module Paymill
       end
 
       def setup_https
-        @https             = Net::HTTP.new(Paymill.api_base, Paymill.api_port)
-        @https.use_ssl     = true
+        @https              = Net::HTTP.new(Paymill.api_base, Paymill.api_port)
+        @https.use_ssl      = true
+        @https.read_timeout = Paymill.timeout if Paymill.timeout
       end
 
       def request
@@ -52,6 +53,7 @@ module Paymill
       def current_time
         Time.now.utc.strftime("%d/%b/%Y %H:%M:%S %Z")
       end
+
     end
   end
 end
